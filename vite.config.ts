@@ -3,6 +3,9 @@ import type { UserConfig } from 'vite';
 
 const config: UserConfig = {
 	plugins: [sveltekit()],
+	build:{
+		target:'esnext'
+	},
 	server: {
 		host: true,
 		port: 5178
