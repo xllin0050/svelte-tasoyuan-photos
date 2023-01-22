@@ -1,3 +1,4 @@
+
 import { supabase } from '$lib/supabaseClient';
 
 const fileNames = async () => {
@@ -6,14 +7,14 @@ const fileNames = async () => {
 	return names;
 };
 const createUrl = async (names: string[]) => {
-	const { data } = await supabase.storage.from('photos').createSignedUrls(names, 300);
+	const { data } = await supabase.storage.from('photos').createSignedUrls(names, 600);
 	const urls = data?.map((item) => item.signedUrl);
 	return urls;
 };
 
 const fileUrls = await fileNames()
 	.then((e) => {
-		return createUrl(e);
+		return createUrl(e ?? []);
 	})
 	.then((e) => {
 		return e;

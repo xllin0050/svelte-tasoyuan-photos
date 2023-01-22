@@ -2,7 +2,9 @@
 	import '@splidejs/svelte-splide/css';
 	import { Splide, SplideSlide, type Options } from '@splidejs/svelte-splide';
 	import { goto } from '$app/navigation';
-
+	import photoUrlStore from '../stores';
+	export let data: any;
+	const { photos } = data;
 	let screenWidth: number;
 
 	const splideOptions: Options = {
@@ -20,37 +22,45 @@
 		}
 	};
 	const clickMe = (e: number) => {
+		photoUrlStore.set(photos[e]);
 		goto(`/${e}`);
 	};
-	export let data: any;
+	$: year = new Date().getFullYear();
 </script>
 
 <svelte:window bind:innerWidth={screenWidth} />
-<section class="h-screen w-full bg-slate-400 flex flex-col justify-between">
-	<div class="text-xl grow flex flex-col sm:flex-row p-4 w-full items-start sm:items-center">
-		<h1 class="pr-4 pb-4 sm:pb-0">Hsu Tsao Yuan</h1>
-		<h2>許造元</h2>
+<section class="h-screen w-full flex flex-col justify-between">
+	<div class="text-xl grow p-4  ">
+		<a href="/about" class="inline-flex flex-col sm:flex-row items-start sm:items-center">
+			<h1 class="pr-4 pb-4 sm:pb-0">Hsu Tsao Yuan</h1>
+			<h2>許造元</h2>
+		</a>
 	</div>
 	<div class="w-full">
 		<Splide
 			aria-label="My Favorite Images"
 			options={splideOptions}
 			class="mx-auto"
-			on:click={(e) => {
-				if (e) {
-					clickMe(e.detail.Slide.index);
+			on:click={(event) => {
+				if (event) {
+					clickMe(event.detail.Slide.index);
 				}
 			}}
 		>
-			{#each data.photos as url}
+			{#each photos as url, idx}
 				<SplideSlide>
-					<img src={url} alt="demo" />
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<img
+						src={url}
+						alt="demo"
+						on:click={() => {
+							photoUrlStore.set(url);
+							goto(`/${idx}`);
+						}}
+					/>
 				</SplideSlide>
 			{/each}
 		</Splide>
 	</div>
-</section>
-<section class="h-screen w-full bg-slate-600">
-	<p>2022 International Photography Awards Professional Official Selection (Event-Concert)</p>
-	<p>2022 Tokyo International Foto Awards Professional Honorable Mention (Event-Music)</p>
+	<p class="text-xs sm:text-base text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
 </section>
