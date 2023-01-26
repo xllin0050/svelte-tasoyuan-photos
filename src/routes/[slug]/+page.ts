@@ -1,13 +1,15 @@
-import type { PageLoad } from './$types';
-import photoUrlStore from '../../stores';
+import type { Load } from '@sveltejs/kit';
+import { storeUrls } from '$lib/stores';
+
 let photoUrl: string;
-photoUrlStore.subscribe((v) => {
+
+storeUrls.subscribe((v) => {
 	photoUrl = v;
 });
 
-export const load = (({ params }) => {
+export const load: Load = ({ params }) => {
 	return {
 		title: params.slug,
 		photoUrl
 	};
-}) satisfies PageLoad;
+};

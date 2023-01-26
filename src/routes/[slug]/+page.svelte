@@ -1,8 +1,9 @@
 <script lang="ts">
+	import Modal from './OrderForm.svelte';
 	export let data: any;
-	const { photoUrl } = data;
+	const { photoUrl, title } = data;
 	$: year = new Date().getFullYear();
-
+	let showModal = false;
 </script>
 
 <section class="p-4 text-sm max-w-[1575px] mx-auto">
@@ -13,12 +14,16 @@
 	<p>輸出紙材：Canson白金純棉相紙</p>
 	<p>裱褙裝鋁框：無酸卡紙夾裱＋高級鋁框</p>
 	<div class="flex items-center justify-between pt-8 md:pt-10">
-		<form action="mailto:xxx">
-			<button class="border rounded px-6 py-2 transition-transform hover:scale-110">預訂</button>
-		</form>
+		<button
+			class="border rounded px-6 py-2 transition-transform hover:scale-110"
+			on:click={() => (showModal = true)}>Order</button
+		>
 		<a href="/" class="w-5 transition-transform hover:scale-125">
 			<img src="/return-svgrepo-com.svg" alt="" />
 		</a>
 	</div>
 </section>
-	<p class="text-xs sm:text-base text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
+<p class="text-xs sm:text-base text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
+{#if showModal}
+	<Modal fileName={title} on:close={() => (showModal = false)} />
+{/if}
