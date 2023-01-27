@@ -25,7 +25,7 @@
 		</a>
 	</div>
 </section>
-<p class="text-xs sm:text-base text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
+<p class="text-xs text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
 {#if showModal}
 	<Modal fileName={$page.params.slug} on:close={() => (showModal = false)} />
 {/if}

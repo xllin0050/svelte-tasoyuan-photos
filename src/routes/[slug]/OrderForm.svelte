@@ -7,6 +7,8 @@
 
 	let modal: any;
 
+	let orderMessage = `Order photo: ${fileName}`;
+
 	const handle_keydown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
 			close();
@@ -44,18 +46,33 @@
 <div class="modal-background" on:click={close} on:keydown={() => {}} />
 
 <div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
-	{fileName}
-	<form action="https://submit-form.com/jzRHuHEv">
-		<label for="name">Name</label>
-		<input type="text" id="name" name="name" placeholder="Name" required />
-		<label for="email">Email</label>
-		<input type="email" id="email" name="email" placeholder="Email" required />
-		<label for="message">Message</label>
-		<textarea id="message" name="message" placeholder="Message" required />
-		<button type="submit">Send</button>
-	</form>
+	<button class="w-5 absolute right-4 transition-transform hover:scale-125" on:click={close}>
+		<img src="/close-square-svgrepo-com.svg" alt="" />
+	</button>
 
-	<button on:click={close}>close modal</button>
+	<p>Thank you so much for your interest.</p>
+	<p>Please leave your information and we will be in touch.</p>
+	<form class="py-4 flex flex-col" action="https://submit-form.com/jzRHuHEv">
+		<label for="name" class="border-b pb-2">
+			<span>Name:</span>
+			<input type="text" id="name" name="name" placeholder="Name" required />
+		</label>
+		<label for="email" class="border-b py-2">
+			<span>Email:</span>
+			<input type="email" id="email" name="email" placeholder="Email" required />
+		</label>
+		<label for="message" class="pt-2 flex flex-col">
+			<span>Message:</span>
+			<textarea
+				id="message"
+				name="message"
+				placeholder="message"
+				bind:value={orderMessage}
+				class="border mt-2"
+			/>
+		</label>
+		<button type="submit" class="mt-4 transition hover:text-orange-400">Send</button>
+	</form>
 </div>
 
 <style>
@@ -65,7 +82,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0, 0, 0, 0.3);
+		background: rgba(0, 0, 0, 0.6);
 	}
 
 	.modal {
