@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	export let fileName: string;
+
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
 
@@ -15,7 +16,6 @@
 		if (e.key === 'Tab') {
 			// trap focus
 			const nodes: HTMLElement[] = modal.querySelectorAll('*');
-			console.log(modal);
 
 			const tabbable = Array.from(nodes).filter((n) => n.tabIndex >= 0);
 

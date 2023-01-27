@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { storeSelectedUrl } from '$lib/stores';
 	import Modal from './OrderForm.svelte';
-	export let data: any;
-	const { photoUrl, title } = data;
+
 	$: year = new Date().getFullYear();
+
 	let showModal = false;
 </script>
 
 <section class="p-4 text-sm max-w-[1575px] mx-auto">
 	<div class="w-full">
-		<img src={photoUrl} alt="" />
+		<img src={$storeSelectedUrl} alt="" />
 	</div>
 	<p class="pt-8 md:pt-10">作品尺寸：30*20cm</p>
 	<p>輸出紙材：Canson白金純棉相紙</p>
@@ -25,5 +27,5 @@
 </section>
 <p class="text-xs sm:text-base text-slate-600 p-4">&copy; {year} Hsu Tsao Yuan</p>
 {#if showModal}
-	<Modal fileName={title} on:close={() => (showModal = false)} />
+	<Modal fileName={$page.params.slug} on:close={() => (showModal = false)} />
 {/if}

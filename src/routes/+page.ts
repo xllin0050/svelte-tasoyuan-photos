@@ -8,6 +8,7 @@ const getFileNames = async () => {
 	const names = data?.map((item) => item.name);
 	return names;
 };
+
 const createUrl = async (names: string[]) => {
 	const { data } = await supabase.storage.from('photos').createSignedUrls(names, 3600);
 	const urls = data?.map((item) => item.signedUrl);
@@ -19,6 +20,7 @@ export const load: Load = async () => {
 	let fileUrls: string[] | undefined = [];
 
 	fileNames = await getFileNames();
+
 	if (fileNames.length) fileUrls = await createUrl(fileNames);
 
 	return {

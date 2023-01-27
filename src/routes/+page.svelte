@@ -3,7 +3,7 @@
 	import '@splidejs/svelte-splide/css';
 	import { Splide, SplideSlide, type Options } from '@splidejs/svelte-splide';
 	import { goto } from '$app/navigation';
-	import { storeUrls } from '$lib/stores';
+	import { storeSelectedUrl } from '$lib/stores';
 	export let data: PageData;
 	const { photos, fileNames } = data;
 
@@ -21,12 +21,14 @@
 			}
 		}
 	};
+
 	const clickMe = (e: number) => {
 		if (photos?.length) {
-			storeUrls.set(photos[e]);
+			storeSelectedUrl.set(photos[e]);
 		}
 		goto(`/${fileNames[e].replace(/\.[^/.]+$/, '')}`);
 	};
+
 	$: year = new Date().getFullYear();
 </script>
 
@@ -55,8 +57,8 @@
 							src={url}
 							alt=""
 							on:click={() => {
-								storeUrls.set(url);
-								goto(`/${idx}`);
+								storeSelectedUrl.set(url);
+								goto(`/${fileNames[idx].replace(/\.[^/.]+$/, '')}`);
 							}}
 							on:keydown={() => {}}
 						/>
