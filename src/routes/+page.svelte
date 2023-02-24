@@ -12,16 +12,18 @@
 		fixedWidth: '30%',
 		heightRatio: 0.5,
 		cover: true,
-		gap: 20,
+		gap: 10,
 		rewind: true,
 		pagination: false,
 		focus: 'center',
+
 		breakpoints: {
 			640: {
 				direction: 'ttb',
 				fixedWidth: '100%',
 				heightRatio: 2.8,
 				arrows: false,
+				drag: false,
 				perPage: 10
 			}
 		}
