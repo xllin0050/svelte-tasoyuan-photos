@@ -8,21 +8,26 @@
 	const { photos, fileNames } = data;
 
 	const splideOptions: Options = {
+		type: 'slide',
 		fixedWidth: '30%',
 		heightRatio: 0.5,
 		cover: true,
-		gap: 10,
+		gap: 20,
 		rewind: true,
 		pagination: false,
 		focus: 'center',
 		breakpoints: {
 			640: {
-				destroy: true
+				direction: 'ttb',
+				fixedWidth: '100%',
+				heightRatio: 2.8,
+				arrows: false,
+				perPage: 10
 			}
 		}
 	};
 
-	const clickMe = (e: number) => {
+	const gotoPage = (e: number) => {
 		if (photos?.length) {
 			storeSelectedUrl.set(photos[e]);
 		}
@@ -46,22 +51,14 @@
 			class="mx-auto"
 			on:click={(event) => {
 				if (event) {
-					clickMe(event.detail.Slide.index);
+					gotoPage(event.detail.Slide.index);
 				}
 			}}
 		>
 			{#if photos?.length}
 				{#each photos as url, idx}
 					<SplideSlide>
-						<img
-							src={url}
-							alt=""
-							on:click={() => {
-								storeSelectedUrl.set(url);
-								goto(`/${fileNames[idx].replace(/\.[^/.]+$/, '')}`);
-							}}
-							on:keydown={() => {}}
-						/>
+						<img src={url} alt="" />
 					</SplideSlide>
 				{/each}
 			{/if}
